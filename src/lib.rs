@@ -1,7 +1,14 @@
 use evalexpr::*;
+use wasm_bindgen::prelude::*;
 
-pub fn evaluate(input: &str) -> Result<i64, EvalexprError> {
-    eval_int(input)
+/// evaluate the input string and return the result
+/// Since it makes error handling easier, we return a string instead of an actual number
+#[wasm_bindgen]
+pub fn evaluate(input: &str) -> String {
+    match eval(input) {
+        Ok(result) => result.to_string(),
+        Err(e) => e.to_string(),
+    }
 }
 
 #[cfg(test)]
